@@ -41,7 +41,7 @@ module "autoscaling" {
   min_size = 1
   max_size = 2
 
-  vpc_sone_identifier = module.blog_vpc.public_subnets
+  vpc_zone_identifier = module.blog_vpc.public_subnets
   target_group_arns   = module.blog_alb.target_group_arns
   security_groups = [module.blog_sg.security_group_id]
 
@@ -67,12 +67,6 @@ module "blog_alb" {
       backend_protocol = "HTTP"
       backend_port     = 80
       target_type      = "instance"
-      targets          = {
-        my_target = {
-          target_id = aws_instance.blog.id
-          port      = 80
-        }
-      }
     }
   ]
 
