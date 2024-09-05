@@ -47,7 +47,8 @@ resource "aws_instance" "blog" {
 }
 
 module "alb" {
-  source = "terraform-aws-modules/alb/aws"
+  source  = "terraform-aws-modules/alb/aws"
+  version = "~> 6.0"
 
   name    = "blog-alb"
 
@@ -59,11 +60,11 @@ module "alb" {
 
   target_groups = [
     {
-      name_prefix = "blog-"
-      protocol    = "HTTP"
-      port        = 80
-      target_type = "instance"
-      targets     = {
+      name_prefix      = "blog-"
+      backend_protocol = "HTTP"
+      backend_port     = 80
+      target_type      = "instance"
+      targets          = {
         my_target = {
           target_id = aws_instance.blog.id
           port      = 80
